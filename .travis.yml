@@ -13,7 +13,7 @@ env:
 
 branches:
   only:
-    - master
+    - coveralls
     
 notifications:
   email: false
@@ -49,5 +49,10 @@ script:
   # Create distributables and JavaDoc
   - ./gradlew installApp distTar distZip debian exe javadocAll
   
+after_success:  
+  # Upload coverage data to coveralls.io
+  - ./gradlew cobertura coveralls
+
   # Upload distributables and JavaDoc
   - ./gradle/lftp/lftpupload.sh
+  
